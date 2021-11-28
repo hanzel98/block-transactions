@@ -15,6 +15,17 @@ const MainPage = () => {
     const [seletedBlockData, setSeletedBlockData] = useState({});
     const [screenName, setScreenName] = useState(BLOCKS_SCREEN);
 
+    const blockUpdater = (web3Connection) => {
+        const refreshPeriod = process.env.REACT_APP_REFRESH_PERIOD;
+        if(Object.keys(web3Connection).length === 0) return;
+        setInterval(async () => {
+            if(Object.keys(web3Connection).length > 0){
+                const latestsBlocks = await getLatestBlocks(web3Connection);
+                setBlocks(latestsBlocks);
+            }
+        },refreshPeriod);
+    };
+
     useEffect(() => {
         async function fetchWeb3() {
             // Get network provider and web3 instance.
@@ -24,6 +35,7 @@ const MainPage = () => {
             const latestsBlocks = await getLatestBlocks(web3Connection)
             setBlocks(latestsBlocks);
             setAccount([accounts]);
+            blockUpdater(web3Connection);
         }
         fetchWeb3();
     }, []);
