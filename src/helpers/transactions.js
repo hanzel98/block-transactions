@@ -33,7 +33,6 @@ export const getBlockTransactionsData = async (web3 ,transactionHashes) => {
     // Resolving transaction promises
     const allTransactions = await Promise.all(transactionsPromises);
     const filteredTransactions = allTransactions.filter(tx => tx.value !== '0');
-    console.log('filteredTransactions:', filteredTransactions)
     return filteredTransactions;
 };
 

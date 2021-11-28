@@ -6,19 +6,19 @@ import { BLOCKS_SCREEN, TRANSACTIONS_SCREEN } from '../constants/types';
 import { ArrowLeftCircle, Funnel, FunnelFill } from 'react-bootstrap-icons';
 import '../App.css';
 
-const MainPage = props => {
+const MainPage = () => {
     const [web3, setWeb3] = useState({});
     const [account, setAccount] = useState('');
     const [blocks, setBlocks] = useState([]);
     const [transactions, setTransactions] = useState([]);
     const [filterByAddress, setFilterByAddress] = useState(false);
-    const [seletedBlockData, setSeletedBlockData] = useState(0);
+    const [seletedBlockData, setSeletedBlockData] = useState({});
     const [screenName, setScreenName] = useState(BLOCKS_SCREEN);
+
     useEffect(() => {
         async function fetchWeb3() {
             // Get network provider and web3 instance.
             const web3Connection = await getWeb3();
-            console.log('web3Connection:', web3Connection)
             setWeb3(web3Connection);
             const accounts = await web3Connection.eth.getAccounts();
             const latestsBlocks = await getLatestBlocks(web3Connection)
@@ -38,7 +38,6 @@ const MainPage = props => {
         return(
             <div>
             {blocks.map((block, index) => {
-                // const hrefValue = `#link${index}`;
                 return(
                 <ListGroup.Item 
                     action 
@@ -68,6 +67,12 @@ const MainPage = props => {
             setFilterByAddress(!filterByAddress);
             
         }
+        const goBackHandle = () => {
+            setScreenName(BLOCKS_SCREEN);
+            setTransactions([]);
+            setFilterByAddress(false);
+            setSeletedBlockData({});
+        };
 
         const renderTooltip = (props) => (
             <Tooltip id="button-tooltip" {...props}>
@@ -79,8 +84,12 @@ const MainPage = props => {
                 <Container >
                     <Row>
                         <Col style={{textAlign: 'left', paddingLeft: '0px', paddingBottom: '10px'}}>
-                        <ArrowLeftCircle color="white" size={40} />
-                        {/* <FilterCircle color="white" size={40} /> */}
+                        <ArrowLeftCircle 
+                        color="white" 
+                        size={40} 
+                        onClick={()=> {
+                            goBackHandle();
+                        }}/>
                         </Col>
                     </Row>
                     <Row>
