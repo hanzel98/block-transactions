@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 import { ListGroup } from 'react-bootstrap';
 import { getBlockTransactionsData } from '../helpers/transactions';
 import { TRANSACTIONS_SCREEN } from '../constants/types';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../App.css';
 
 const BlockList = ({ setTransactions, setScreenName, setSeletedBlockData, web3, blocks }) => {
   const blockSelected = async block => {
+    toast("⏳Loading...");
     const blockTransactions = await getBlockTransactionsData(web3, block.transactions);
     setTransactions(blockTransactions);
     setScreenName(TRANSACTIONS_SCREEN);
@@ -15,6 +18,7 @@ const BlockList = ({ setTransactions, setScreenName, setSeletedBlockData, web3, 
 
   return (
     <div>
+      <ToastContainer />
       {blocks.map(block => {
         return (
           <ListGroup.Item
