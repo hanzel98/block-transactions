@@ -18,7 +18,7 @@ const MainPage = () => {
 
   // Update the latest blocks every fixed period of time.
   const blockUpdater = web3Connection => {
-    const refreshPeriod = process.env.REACT_APP_REFRESH_PERIOD;
+    const refreshPeriod = process.env.REACT_APP_REFRESH_PERIOD || 5000;
     if (Object.keys(web3Connection).length === 0) return;
     setInterval(async () => {
       if (Object.keys(web3Connection).length > 0) {
