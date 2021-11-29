@@ -38,7 +38,43 @@
   }
 }
 
-.transaction-text {
-  /* font-size: 1.7vw; */
+.block-item {
+  color: #00BCD4;
+}
+
+.transaction-list {
+  margin-bottom: 50px;
+}
+
+.transactions-empty {
+  margin-top: 10px;
+}
+
+.transaction-card {
+  margin-top: 10px;
   text-align: left;
+}
+
+.transaction-text{
+  font-size: 20px;
+  color: #212121;
+}
+.transaction-element-left, .transaction-element-left {
+  padding-left: '0px';
+}
+
+.transaction-element-left {
+  text-align: left;
+}
+
+.transaction-element-right {
+  text-align: right;
+}
+
+.filter-message {
+  font-size: 3.1vmin;
+}
+
+.arrow-left {
+  padding-bottom: 10px;
 }
