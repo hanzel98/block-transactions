@@ -2,15 +2,14 @@
  * This function returns an array with the data of the latest 10 blocks
  * @param {Object} web3 - web3 instance
  */
-export const getLatestBlocks = async web3 => {
+export const getLatestBlocks = async (web3, amountOfBlocks = 10) => {
     const latestBlockNumber = await web3.eth.getBlockNumber();
     // Requesting information for the 10 blocks sequentially
     const latestBlocksPromises = [];
     // eslint-disable-next-line no-plusplus
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < amountOfBlocks; i++) {
         const blockNumber = latestBlockNumber - i;
         const blockDataPromise = web3.eth.getBlock(blockNumber);
-        // const blockDataPromise = web3.eth.getBlock(blockNumber).then(data => ({...data, blockNumber})); // This might not be necessary
         latestBlocksPromises.push(blockDataPromise);
     }
     // Resolving block promises

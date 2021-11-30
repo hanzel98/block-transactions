@@ -31,9 +31,7 @@ const TransactionListTopSection = ({
           <ArrowLeftCircle
             color="white"
             size={40}
-            onClick={() => {
-              goBackHandle();
-            }}
+            onClick={() => {goBackHandle()}}
           />
         </Col>
       </Row>

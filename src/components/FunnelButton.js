@@ -33,23 +33,20 @@ const FunnelButton = ({
       {filterByAddress ? 'Clear Filter' : 'Filter By My Address'}
     </Tooltip>
   );
+  const funnelProperties = { funnelSize: 40, funnelColor: 'white'};
   return (
     <OverlayTrigger placement="bottom" overlay={renderTooltip}>
       {filterByAddress ? (
         <FunnelFill
-          color="white"
-          size={40}
-          onClick={() => {
-            filterHandler();
-          }}
+          size={funnelProperties.funnelSize}
+          white={funnelProperties.funnelColor}
+          onClick={() => {filterHandler()}}
         />
       ) : (
         <Funnel
-          color="white"
-          size={40}
-          onClick={() => {
-            filterHandler();
-          }}
+          size={funnelProperties.funnelSize}
+          white={funnelProperties.funnelColor}
+          onClick={() => {filterHandler()}}
         />
       )}
     </OverlayTrigger>

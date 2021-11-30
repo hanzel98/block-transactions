@@ -15,14 +15,14 @@ const MainPage = () => {
   const [transactions, setTransactions] = useState([]);
   const [seletedBlockData, setSeletedBlockData] = useState({});
   const [screenName, setScreenName] = useState(BLOCKS_SCREEN);
-
+  const amountOfBlocks = process.env.REACT_APP_AMOUNT_OF_BLOCKS || 10;
   // Update the latest blocks every fixed period of time.
   const blockUpdater = web3Connection => {
     const refreshPeriod = process.env.REACT_APP_REFRESH_PERIOD || 5000;
     if (Object.keys(web3Connection).length === 0) return;
     setInterval(async () => {
       if (Object.keys(web3Connection).length > 0) {
-        const latestsBlocks = await getLatestBlocks(web3Connection);
+        const latestsBlocks = await getLatestBlocks(web3Connection, amountOfBlocks);
         setBlocks(latestsBlocks);
       }
     }, refreshPeriod);
@@ -34,7 +34,7 @@ const MainPage = () => {
       const web3Connection = await getWeb3();
       setWeb3(web3Connection);
       const accounts = await web3Connection.eth.getAccounts();
-      const latestsBlocks = await getLatestBlocks(web3Connection);
+      const latestsBlocks = await getLatestBlocks(web3Connection, amountOfBlocks);
       setBlocks(latestsBlocks);
       setAccount(accounts[0]);
       blockUpdater(web3Connection);

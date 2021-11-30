@@ -22,8 +22,11 @@ Currently the most popular method of viewing this information is via etherscam, 
 Check out this demo video to get more familiar with the user interface:
 <https://youtu.be/tJqqhSfVC-I>
 
-### Refresh Period
+### Refresh period
 The application continuously pulls information every 5 seconds to get the latest 10 blocks, but this refresh period can be modified with the environment variable: `REACT_APP_REFRESH_PERIOD`.
+
+### Amount of blocks
+The default amount of blocks to pull is 10 but it can be changed.
 
 ### Initial block list view:
 
