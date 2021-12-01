@@ -47,6 +47,11 @@ describe("test blockchain functions", () => {
       expect(blocks).toHaveLength(10);
     });
 
+    test('get default amount of latest blocks', async () => {
+      const blocks = await getLatestBlocks(web3);
+      expect(blocks).toHaveLength(10);
+    });
+
     test('validate block properties', async () => {
       const amountOfBlocks = 1;
       const blocks = await getLatestBlocks(web3, amountOfBlocks);

@@ -41,6 +41,7 @@ const FunnelButton = ({
     if (filterByAddress) {
       return (
         <FunnelFill
+          data-testid="funnel-filled"
           size={funnelProperties.funnelSize}
           white={funnelProperties.funnelColor}
           onClick={filterHandler}
@@ -49,6 +50,7 @@ const FunnelButton = ({
     }
     return (
       <Funnel
+        data-testid="funnel-unfilled"
         size={funnelProperties.funnelSize}
         white={funnelProperties.funnelColor}
         onClick={filterHandler}

@@ -29,6 +29,9 @@ The application continuously pulls information every 5 seconds to get the latest
 ### Amount of blocks
 The default amount of blocks to pull is 10 but it can be changed.
 
+### Running tests 
+This project has tests for functions and components, to execute them run `npm test` in the root folder.
+![Screenshot](screenshot5.png)
 ### Initial block list view:
 
 ![Screenshot](screenshot1.png)
