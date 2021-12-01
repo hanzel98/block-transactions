@@ -9,14 +9,10 @@ const TransactionElement = ({ hash, from, to, value }) => {
       <Card.Body>
         <Card.Title>
           <div className="transaction-text">
-            <strong>From: </strong>
-            {from} <br />
-            <strong>To: </strong>
-            {to} <br />
-            <strong>Value: </strong>
-            {value} <br />
-            <strong>Tx Hash: </strong>
-            {hash}
+            <strong>From: </strong> {from} <br />
+            <strong>To: </strong> {to} <br />
+            <strong>Value: </strong> {value} <br />
+            <strong>Tx Hash: </strong> {hash}
           </div>
         </Card.Title>
       </Card.Body>

@@ -6,6 +6,9 @@ export const getLatestBlocks = async (web3, amountOfBlocks = 10) => {
     const latestBlockNumber = await web3.eth.getBlockNumber();
     // Requesting information for the 10 blocks sequentially
     const latestBlocksPromises = [];
+    // If not enough blocks then adjust to show the maximum amount of blocks available
+    // eslint-disable-next-line no-param-reassign
+    if (latestBlockNumber < amountOfBlocks) amountOfBlocks = latestBlockNumber;
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < amountOfBlocks; i++) {
         const blockNumber = latestBlockNumber - i;

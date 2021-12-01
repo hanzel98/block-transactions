@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
@@ -27,39 +28,56 @@ const FunnelButton = ({
     // Updates the filter value to the opposite
     setFilterByAddress(!filterByAddress);
   };
+  const tooltipMessage = filterByAddress ? 'Clear Filter' : 'Filter By My Address';
+  const funnelProperties = { funnelSize: 40, funnelColor: 'white' };
 
   const renderTooltip = props => (
     <Tooltip id="button-tooltip" {...props}>
-      {filterByAddress ? 'Clear Filter' : 'Filter By My Address'}
+      {tooltipMessage}
     </Tooltip>
   );
-  const funnelProperties = { funnelSize: 40, funnelColor: 'white'};
-  return (
-    <OverlayTrigger placement="bottom" overlay={renderTooltip}>
-      {filterByAddress ? (
+
+  const ShowFunnel = () => {
+    if (filterByAddress) {
+      return (
         <FunnelFill
           size={funnelProperties.funnelSize}
           white={funnelProperties.funnelColor}
-          onClick={() => {filterHandler()}}
+          onClick={filterHandler}
         />
-      ) : (
-        <Funnel
-          size={funnelProperties.funnelSize}
-          white={funnelProperties.funnelColor}
-          onClick={() => {filterHandler()}}
-        />
-      )}
+      );
+    }
+    return (
+      <Funnel
+        size={funnelProperties.funnelSize}
+        white={funnelProperties.funnelColor}
+        onClick={filterHandler}
+      />
+    );
+  };
+  return (
+    <OverlayTrigger placement="bottom" overlay={renderTooltip}>
+      {ShowFunnel()}
     </OverlayTrigger>
   );
 };
 
 FunnelButton.propTypes = {
-  seletedBlockData: PropTypes.any.isRequired,
+  seletedBlockData: PropTypes.shape({
+    number: PropTypes.number,
+    transactions: PropTypes.arrayOf(PropTypes.string),
+  }).isRequired,
   setTransactions: PropTypes.func.isRequired,
   filterByAddress: PropTypes.bool.isRequired,
   setFilterByAddress: PropTypes.func.isRequired,
-  transactions: PropTypes.arrayOf(Object).isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
+  transactions: PropTypes.arrayOf(
+    PropTypes.shape({
+      from: PropTypes.string.isRequired,
+      to: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+      hash: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
   web3: PropTypes.object.isRequired,
   account: PropTypes.string.isRequired,
 };

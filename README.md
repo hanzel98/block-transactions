@@ -16,6 +16,7 @@ Currently the most popular method of viewing this information is via etherscam, 
 - The first screen shows the list of the last 10 blocks. You can click on one of the blocks to see the information it contains.
 - The second screen shows the list of transactions inside the selected block where two addresses exchanged ETH.
 - There is a funnel icon that allows you to filter by the current address used in metamask. This will show only the transactions where the current address is in the `from` or `to` values of the transaction. It will show the current address in use for filtering.
+- To change networks, go to the main page, change the network in Metamask and wait a few seconds for the blocks of the new network to be automatically displayed.
 
 ## Demo in video
 
@@ -23,7 +24,7 @@ Check out this demo video to get more familiar with the user interface:
 <https://youtu.be/tJqqhSfVC-I>
 
 ### Refresh period
-The application continuously pulls information every 5 seconds to get the latest 10 blocks, but this refresh period can be modified with the environment variable: `REACT_APP_REFRESH_PERIOD`.
+The application continuously pulls information every 5 seconds to get the latest 10 blocks, but this refresh period can be modified with the environment variable: `REACT_APP_REFRESH_PERIOD`. 
 
 ### Amount of blocks
 The default amount of blocks to pull is 10 but it can be changed.

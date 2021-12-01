@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'react-bootstrap';
@@ -24,14 +25,27 @@ const TransactionListTopSection = ({
     setFilterByAddress(false);
     setSeletedBlockData({});
   };
+
+  const showFilteringMessage = () => {
+    if (!filterByAddress) return <></>;
+    return (
+      <Row>
+        <Col className="transaction-element-left filter-message">
+          <div>{`Filtering by this address: ${account}`}</div>
+        </Col>
+      </Row>
+    );
+  };
+  const leftArrowProperties = { size: 40, color: 'white' };
+
   return (
     <Container>
       <Row>
         <Col className="transaction-element-left arrow-left">
           <ArrowLeftCircle
-            color="white"
-            size={40}
-            onClick={() => {goBackHandle()}}
+            color={leftArrowProperties.color}
+            size={leftArrowProperties.size}
+            onClick={goBackHandle}
           />
         </Col>
       </Row>
@@ -53,27 +67,28 @@ const TransactionListTopSection = ({
           />
         </Col>
       </Row>
-      {filterByAddress ? (
-        <Row>
-          <Col className="transaction-element-left filter-message">
-            <div>{`Filtering by this address: ${account}`}</div>
-          </Col>
-        </Row>
-      ) : (
-        <></>
-      )}
+      {showFilteringMessage()}
     </Container>
   );
 };
 
 TransactionListTopSection.propTypes = {
   account: PropTypes.string.isRequired,
-  seletedBlockData: PropTypes.any.isRequired,
+  seletedBlockData: PropTypes.shape({
+    number: PropTypes.number,
+    transactions: PropTypes.arrayOf(PropTypes.string)
+  }).isRequired,
   setTransactions: PropTypes.func.isRequired,
   setScreenName: PropTypes.func.isRequired,
   setSeletedBlockData: PropTypes.func.isRequired,
-  transactions: PropTypes.arrayOf(Object).isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
+  transactions: PropTypes.arrayOf(
+    PropTypes.shape({
+      from: PropTypes.string.isRequired,
+      to: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+      hash: PropTypes.string.isRequired,
+    })
+  ).isRequired,
   web3: PropTypes.object.isRequired,
 };
 

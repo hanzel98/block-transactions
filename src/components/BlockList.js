@@ -1,36 +1,31 @@
-import React from 'react';
+/* eslint-disable react/forbid-prop-types */
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { ListGroup } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify';
 import { getBlockTransactionsData } from '../helpers/transactions';
 import { TRANSACTIONS_SCREEN } from '../constants/types';
-import { ToastContainer, toast } from 'react-toastify';
+import BlockItem from './BlockItem';
 import 'react-toastify/dist/ReactToastify.css';
 import '../App.css';
 
 const BlockList = ({ setTransactions, setScreenName, setSeletedBlockData, web3, blocks }) => {
-  const blockSelected = async block => {
-    toast("⏳Loading...");
-    const blockTransactions = await getBlockTransactionsData(web3, block.transactions);
-    setTransactions(blockTransactions);
-    setScreenName(TRANSACTIONS_SCREEN);
-    setSeletedBlockData(block);
-  };
+  const blockSelected = useCallback(
+    async block => {
+      toast('⏳Loading...');
+      const blockTransactions = await getBlockTransactionsData(web3, block.transactions);
+      setTransactions(blockTransactions);
+      setScreenName(TRANSACTIONS_SCREEN);
+      setSeletedBlockData(block);
+    },
+    [web3, setTransactions, setScreenName, setSeletedBlockData],
+  );
 
   return (
     <div>
       <ToastContainer />
-      {blocks.map(block => {
-        return (
-          <ListGroup.Item
-            action
-            key={block.number}
-            onClick={() => blockSelected(block)}
-            className="block-item"
-          >
-            <strong>Read Block #{block.number}</strong>
-          </ListGroup.Item>
-        );
-      })}
+      {blocks.map(block => (
+        <BlockItem key={block.number} block={block} blockSelected={blockSelected} />
+      ))}
     </div>
   );
 };
@@ -39,9 +34,13 @@ BlockList.propTypes = {
   setTransactions: PropTypes.func.isRequired,
   setScreenName: PropTypes.func.isRequired,
   setSeletedBlockData: PropTypes.func.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
   web3: PropTypes.object.isRequired,
-  blocks: PropTypes.arrayOf(Object).isRequired,
+  blocks: PropTypes.arrayOf(
+    PropTypes.shape({
+      number: PropTypes.number,
+      transactions: PropTypes.arrayOf(PropTypes.string),
+    }),
+  ).isRequired,
 };
 
 export default BlockList;

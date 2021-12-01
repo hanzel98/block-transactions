@@ -42,6 +42,34 @@ const MainPage = () => {
     fetchWeb3();
   }, []);
 
+  const screenSelector = () => {
+    if (screenName === BLOCKS_SCREEN) {
+      return (
+        <BlockList
+          setTransactions={setTransactions}
+          setScreenName={setScreenName}
+          setSeletedBlockData={setSeletedBlockData}
+          web3={web3}
+          blocks={blocks}
+        />
+      );
+    }
+    if (screenName === TRANSACTIONS_SCREEN) {
+      return (
+        <TransactionList
+          account={account}
+          seletedBlockData={seletedBlockData}
+          setTransactions={setTransactions}
+          setScreenName={setScreenName}
+          setSeletedBlockData={setSeletedBlockData}
+          transactions={transactions}
+          web3={web3}
+        />
+      );
+    }
+    return <></>;
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -50,32 +78,7 @@ const MainPage = () => {
           <Tab.Container id="list-group-tabs-example">
             <Row>
               <Col>
-                <ListGroup>
-                  {screenName === BLOCKS_SCREEN ? (
-                    <BlockList
-                      setTransactions={setTransactions}
-                      setScreenName={setScreenName}
-                      setSeletedBlockData={setSeletedBlockData}
-                      web3={web3}
-                      blocks={blocks}
-                    />
-                  ) : (
-                    <></>
-                  )}
-                  {screenName === TRANSACTIONS_SCREEN ? (
-                    <TransactionList
-                      account={account}
-                      seletedBlockData={seletedBlockData}
-                      setTransactions={setTransactions}
-                      setScreenName={setScreenName}
-                      setSeletedBlockData={setSeletedBlockData}
-                      transactions={transactions}
-                      web3={web3}
-                    />
-                  ) : (
-                    <></>
-                  )}
-                </ListGroup>
+                <ListGroup>{screenSelector()}</ListGroup>
               </Col>
             </Row>
           </Tab.Container>

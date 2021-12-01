@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ListGroup } from 'react-bootstrap';
@@ -14,6 +15,21 @@ const TransactionList = ({
   transactions,
   web3,
 }) => {
+  const showTransactionList = () => {
+    // Show the transaction list if there is at least one transaction
+    if (transactions.length > 0) {
+      return transactions.map(({ from, to, value, hash }) => {
+        return <TransactionElement from={from} to={to} value={value} key={hash} hash={hash} />;
+      });
+    }
+    // Show an item indicating that no transactions were found
+    return (
+      <ListGroup.Item variant="warning" className="transactions-empty">
+        <strong>There are 0 transactions in this block sending ETH </strong>
+      </ListGroup.Item>
+    );
+  };
+
   return (
     <div className="transaction-list">
       <TransactionListTopSection
@@ -25,28 +41,28 @@ const TransactionList = ({
         transactions={transactions}
         web3={web3}
       />
-
-      {transactions.length > 0 ? (
-        transactions.map(({ from, to, value, hash }) => {
-          return <TransactionElement from={from} to={to} value={value} key={hash} hash={hash} />;
-        })
-      ) : (
-        <ListGroup.Item variant="warning" className="transactions-empty">
-          <strong>There are 0 transactions in this block sending ETH </strong>
-        </ListGroup.Item>
-      )}
+      {showTransactionList()}
     </div>
   );
 };
 
 TransactionList.propTypes = {
   account: PropTypes.string.isRequired,
-  seletedBlockData: PropTypes.shape({}).isRequired,
+  seletedBlockData: PropTypes.shape({
+    number: PropTypes.number,
+    transactions: PropTypes.arrayOf(PropTypes.string),
+  }).isRequired,
   setTransactions: PropTypes.func.isRequired,
   setScreenName: PropTypes.func.isRequired,
   setSeletedBlockData: PropTypes.func.isRequired,
-  transactions: PropTypes.arrayOf(Object).isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
+  transactions: PropTypes.arrayOf(
+    PropTypes.shape({
+      from: PropTypes.string.isRequired,
+      to: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+      hash: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
   web3: PropTypes.object.isRequired,
 };
 
